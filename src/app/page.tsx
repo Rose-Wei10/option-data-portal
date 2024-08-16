@@ -1,28 +1,35 @@
 import Image from "next/image";
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { useUser } from "@clerk/nextjs";
+import { useState } from "react";
+import UseStoreUserEmail from "../utils/useClient";
+import Button from "../utils/useClient";
 
 export default async function Home() {
-
   const { userId } = auth();
-
-  if (userId) {
-    // Query DB for user specific information or display assets only to signed in users
-  }
 
   // Get the Backend API User object when you need access to the user's information
   const user = await currentUser();
-  const { orgRole } = auth()
+  const userEmail = user?.primaryEmailAddress?.emailAddress || "";
+  // if (typeof window !== 'undefined') {
+  //   localStorage.setItem("userEmail", "hi");
+  // }
+  // let email;
+  // if(user?.primaryEmailAddress?.emailAddress && typeof window !== "undefined"){
+  //   localStorage.setItem("userEmail", "hi");
+  //   email = localStorage.getItem("userEmail") || ""
+  // }
   
   return (
     
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>{userId},Hi {user?.firstName} {user?.lastName}</h1>
-
+      <h1>Hi {user?.firstName} {userEmail}</h1>
+      <Button email={userEmail}/>
       <div className="width:1000px!important">
       <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       <stripe-pricing-table pricing-table-id="prctbl_1PfmhiEsKvZ43FCydDcsdwd8"
       publishable-key="pk_test_51MXLheEsKvZ43FCyiiv8RwwCkcVM3XiunrE2tv451aH5tQuO8kc7mfnd3OyTeLXes4PEZkbrOGvvzPHYeGzo0aTx00awQ7d3el"
+      customer-email={user?.primaryEmailAddress?.emailAddress}
       style={{
         width: "100%",   // Full width of the container
         maxWidth: "1200px", // Increase max width to make it larger
