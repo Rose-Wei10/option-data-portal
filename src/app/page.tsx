@@ -2,8 +2,8 @@ import Image from "next/image";
 import { auth, currentUser } from '@clerk/nextjs/server';
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
-import UseStoreUserEmail from "../utils/useClient";
 import Button from "../utils/useClient";
+import { StripePricingTable } from "../components/pricing-table";
 
 export default async function Home() {
   const { userId } = auth();
@@ -24,12 +24,15 @@ export default async function Home() {
     
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1>Hi {user?.firstName} {userEmail}</h1>
+
+      {/* <StripePricingTable email={userEmail}/> */}
       <Button email={userEmail}/>
+
       <div className="width:1000px!important">
       <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       <stripe-pricing-table pricing-table-id="prctbl_1PfmhiEsKvZ43FCydDcsdwd8"
       publishable-key="pk_test_51MXLheEsKvZ43FCyiiv8RwwCkcVM3XiunrE2tv451aH5tQuO8kc7mfnd3OyTeLXes4PEZkbrOGvvzPHYeGzo0aTx00awQ7d3el"
-      customer-email={user?.primaryEmailAddress?.emailAddress}
+      customer-email={userEmail}
       style={{
         width: "100%",   // Full width of the container
         maxWidth: "1200px", // Increase max width to make it larger
