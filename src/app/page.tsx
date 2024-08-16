@@ -1,16 +1,42 @@
 import Image from "next/image";
+import { auth, currentUser } from '@clerk/nextjs/server';
+import { useUser } from "@clerk/nextjs";
 
-export default function Home() {
+export default async function Home() {
+
+  const { userId } = auth();
+
+  if (userId) {
+    // Query DB for user specific information or display assets only to signed in users
+  }
+
+  // Get the Backend API User object when you need access to the user's information
+  const user = await currentUser();
+  const { orgRole } = auth()
   
   return (
     
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <h1>{userId},Hi {user?.firstName} {user?.lastName}</h1>
 
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+      <div className="width:1000px!important">
       <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       <stripe-pricing-table pricing-table-id="prctbl_1PfmhiEsKvZ43FCydDcsdwd8"
-      publishable-key="pk_test_51MXLheEsKvZ43FCyiiv8RwwCkcVM3XiunrE2tv451aH5tQuO8kc7mfnd3OyTeLXes4PEZkbrOGvvzPHYeGzo0aTx00awQ7d3el">
+      publishable-key="pk_test_51MXLheEsKvZ43FCyiiv8RwwCkcVM3XiunrE2tv451aH5tQuO8kc7mfnd3OyTeLXes4PEZkbrOGvvzPHYeGzo0aTx00awQ7d3el"
+      style={{
+        width: "100%",   // Full width of the container
+        maxWidth: "1200px", // Increase max width to make it larger
+        transform: "scale(1.2)",  // Scale up the table to 120%
+        transformOrigin: "center"  // Keep the scale centered
+      }}
+      >
       </stripe-pricing-table>
+      </div>
+    </main>
+  );
+}
+
+
         {/* <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           G started by editing&nbsp;
           <code className="font-mono font-bold">app/page.tsx</code>
@@ -33,21 +59,9 @@ export default function Home() {
             />
           </a>
         </div> */}
-      </div>
 
-      {/* <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div> */}
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        {/* <a
+              {/* <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
+        <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           target="_blank"
@@ -62,9 +76,9 @@ export default function Home() {
           <p className="m-0 max-w-[30ch] text-sm opacity-50">
             Find in-depth information about Next.js features and API.
           </p>
-        </a> */}
+        </a>
 
-        {/* <a
+        <a
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
           target="_blank"
@@ -113,8 +127,16 @@ export default function Home() {
           <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
-        </a> */}
-      </div>
-    </main>
-  );
-}
+        </a>
+      </div> */}
+
+            {/* <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
+        <Image
+          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
+          src="/next.svg"
+          alt="Next.js Logo"
+          width={180}
+          height={37}
+          priority
+        />
+      </div> */}
